@@ -1,5 +1,6 @@
 package jpagroup.jpashop.domain.item;
 
+import jpagroup.jpashop.exception.NotEnoughStockException;
 import jpagroup.jpashop.domain.Category;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,11 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
 public abstract class Item {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "item_id")
     private Long id;
 
@@ -24,4 +27,17 @@ public abstract class Item {
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
 
+    // 비지니스 로지기
+    public void addStock(int quantity) {
+        this.stockQuantity += quantity;
+    }
+
+    public void subStock(int quantity) {
+        int remain = this.stockQuantity - quantity;
+        //음수에 대한 검사
+        if(remain < 0){
+            throw new NotEnoughStockException("need more stock");
+        }
+        this.stockQuantity = remain;
+    }
 }
