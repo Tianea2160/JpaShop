@@ -63,7 +63,6 @@ class MemberServiceTest {
         //then
         assertThrows(IllegalStateException.class, ()->{
             memberService.join(member2);
-            LOG.info("success IllegalStateException!");
         });
     }
 }

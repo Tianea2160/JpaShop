@@ -11,7 +11,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
 public abstract class Item {
@@ -32,7 +31,7 @@ public abstract class Item {
         this.stockQuantity += quantity;
     }
 
-    public void subStock(int quantity) {
+    public void removeStock(int quantity) {
         int remain = this.stockQuantity - quantity;
         //음수에 대한 검사
         if(remain < 0){
