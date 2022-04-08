@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemRepository {
 
-    private EntityManager em;
+    private final EntityManager em;
 
     public void save(Item item){
         if(item.getId() == null){
