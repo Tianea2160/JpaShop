@@ -31,11 +31,7 @@ public class ItemService {
     public Long updateItem(Long itemId, String name, int price, int stockQuantity) {
         //변경 감지 사용법
         Item item = itemRepository.findOne(itemId);
-
-        item.setName(name);
-        item.setPrice(price);
-        item.setStockQuantity(stockQuantity);
-
+        item.updateItem(name, price, stockQuantity);
         return itemId;
     }
 }

@@ -13,6 +13,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -34,7 +38,10 @@ public class OrderService {
 
         OrderItem orderItem = OrderItem.creatOrderItem(item, item.getPrice(), count);
 
-        Order order = Order.createOrder(member, delivery, orderItem);
+        Order order = Order.builder()
+                .member(member)
+                .orderItems(Collections.singletonList(orderItem))
+                .build();
 
         orderRepository.save(order);
         return order.getId();
@@ -46,9 +53,5 @@ public class OrderService {
         Order order = orderRepository.findOne(orderId);
         order.cancel();
     }
-
-
-    //검색
-
 
 }

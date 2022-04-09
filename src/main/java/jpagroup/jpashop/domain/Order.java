@@ -1,9 +1,7 @@
 package jpagroup.jpashop.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,10 +9,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@Getter @Setter
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
-
     @Id
     @GeneratedValue
     @Column(name = "order_id")
@@ -53,17 +50,16 @@ public class Order {
     }
 
     //생성 메서드
-    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems){
-        Order order = new Order();
+    @Builder
+    public Order(Member member, Delivery delivery,List<OrderItem> orderItems){
+        this.setMember(member); // 비지니스 로직
+        this.delivery = delivery;
 
-        order.setMember(member);
-        order.setDelivery(delivery);
         for(OrderItem orderItem : orderItems){
-            order.setOrderItem(orderItem);
+            this.setOrderItem(orderItem);
         }
-        order.setStatus(OrderStatus.ORDER);
-        order.setOrderDate(LocalDateTime.now());
-        return order;
+        this.status = OrderStatus.ORDER;
+        this.orderDate = LocalDateTime.now();
     }
 
     // 비지니스 로직
@@ -72,7 +68,7 @@ public class Order {
             throw new IllegalStateException("이미 배송된 상품은 주문 취소가 불가능합니다.");
         }
 
-        this.setStatus(OrderStatus.CANCEL);
+        this.status = OrderStatus.CANCEL;
         orderItems.forEach((OrderItem::cancel));
     }
     //조회 로직
