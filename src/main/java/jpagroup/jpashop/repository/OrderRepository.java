@@ -22,7 +22,9 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
-    //public List<Order> findAll(){}
-
-
+    //dynamic query
+    public List<Order> findAllByCriteria(OrderSearch orderSearch){
+        //query dsl을 사용하자
+        return null;
+    }
 }
