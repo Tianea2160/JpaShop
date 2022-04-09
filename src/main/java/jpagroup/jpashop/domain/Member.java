@@ -12,7 +12,7 @@ import java.util.List;
 
 @Getter @Setter
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Member {
     @Id @GeneratedValue
     @Column(name = "member_id")

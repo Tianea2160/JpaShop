@@ -13,18 +13,29 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class ItemService {
 
-    private ItemRepository itemRepository;
+    private final ItemRepository itemRepository;
 
     @Transactional
     public void saveItem(Item item){
         itemRepository.save(item);
     }
 
-    public List<Item> findAll(){
+    public List<Item> findItems(){
         return itemRepository.findAll();
     }
 
     public Item findOne(Long id){
         return itemRepository.findOne(id);
+    }
+
+    public Long updateItem(Long itemId, String name, int price, int stockQuantity) {
+        //변경 감지 사용법
+        Item item = itemRepository.findOne(itemId);
+
+        item.setName(name);
+        item.setPrice(price);
+        item.setStockQuantity(stockQuantity);
+
+        return itemId;
     }
 }
