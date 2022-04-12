@@ -17,6 +17,7 @@ public class Book extends Item{
     protected Book(){
         super();
     }
+
     @Builder
     protected Book(String name, Integer price, Integer stockQuantity, String author, String isbn){
         super(name, price, stockQuantity);
