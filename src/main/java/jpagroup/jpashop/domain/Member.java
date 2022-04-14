@@ -4,6 +4,7 @@ package jpagroup.jpashop.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+    @NotNull
     private String name;
 
     @Embedded
@@ -29,5 +31,10 @@ public class Member {
 
         this.name = name;
         this.address = address;
+    }
+
+    public Long updateName(String name) {
+        this.name = name;
+        return this.id;
     }
 }
